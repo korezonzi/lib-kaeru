@@ -7,5 +7,4 @@ backup
 /.project
 /.settings
 /RUNNING_PID
-/framework/*/target
 
