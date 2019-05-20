@@ -72,15 +72,25 @@
     )
   )
 
-  // service libraries
-  //~~~~~~~~~~~~~~~~~~
+  // user data base library
   lazy val libUDB = (project in file("framework/kaeru-udb"))
     .settings(name := "kidsna-udb")
     .settings(commonSettings:    _*)
     .settings(publisherSettings: _*)
 
-  // service main libraries
-  //~~~~~~~~~~~~~~~~~~~~~~~
+  // login auth liblary
+  lazy val libAuth = (project in file("framework/kaeru-play-auth"))
+    .settings(name := "kidsna-udb")
+    .settings(commonSettings:    _*)
+    .settings(publisherSettings: _*)
+
+  // core library
+  lazy val libCORE = (project in file("framework/kaeru-core"))
+    .settings(name := "kidsna-core")
+    .settings(commonSettings:    _*)
+    .settings(publisherSettings: _*)
+
+  // main library
   lazy val libMain = (project in file("."))
     .settings(name := "kaeru-app")
     .settings(commonSettings:    _*)
