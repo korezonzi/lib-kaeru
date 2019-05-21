@@ -8,3 +8,5 @@ backup
 /.settings
 /RUNNING_PID
 
+
+!.gitkeep

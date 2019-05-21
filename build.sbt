@@ -8,7 +8,7 @@
   lazy val release = (branch == "master" || branch.startsWith("release"))
   lazy val commonSettings = Seq(
     organization := "kaeru.app",
-    scalaVersion := "2.12.8",
+    scalaVersion := "2.12.7",
     resolvers ++= Seq(
       "Typesafe Releases"  at "http://repo.typesafe.com/typesafe/releases/",
       "Sonatype Release"   at "https://oss.sonatype.org/content/repositories/releases/",
@@ -79,7 +79,7 @@
     .settings(publisherSettings: _*)
 
   // login auth liblary
-  lazy val libAuth = (project in file("framework/kaeru-auth"))
+  lazy val libAUTH = (project in file("framework/kaeru-auth"))
     .settings(name := "kaeru-auth")
     .settings(commonSettings:    _*)
     .settings(publisherSettings: _*)
@@ -89,14 +89,16 @@
     .settings(name := "kaeru-core")
     .settings(commonSettings:    _*)
     .settings(publisherSettings: _*)
+    .aggregate(libUDB,libAUTH)
+    .dependsOn(libUDB,libAUTH)    
 
   // main library
-  lazy val libMain = (project in file("."))
+  lazy val libMAIN = (project in file("."))
     .settings(name := "kaeru-app")
     .settings(commonSettings:    _*)
     .settings(publisherSettings: _*)
-    .aggregate(libUDB)
-    .dependsOn(libUDB)
+    .aggregate(libUDB,libAUTH,libCORE)
+    .dependsOn(libUDB,libAUTH,libCORE)
 
   // Setting for Prompt
   //~~~~~~~~~~~~~~~~~~~~
