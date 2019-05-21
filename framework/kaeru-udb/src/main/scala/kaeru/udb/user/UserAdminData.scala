@@ -3,6 +3,8 @@ package kaeru.udb.user
 import ixias.model._
 import java.time.LocalDateTime
 
+
+/* ユーザー管理 */
 import AdminData._
 case class AdminData(
   id:         Option[Id],           // User Id

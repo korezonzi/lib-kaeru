@@ -78,27 +78,21 @@
     .settings(commonSettings:    _*)
     .settings(publisherSettings: _*)
 
-  // login auth liblary
-  lazy val libAUTH = (project in file("framework/kaeru-auth"))
-    .settings(name := "kaeru-auth")
-    .settings(commonSettings:    _*)
-    .settings(publisherSettings: _*)
-
   // core library
   lazy val libCORE = (project in file("framework/kaeru-core"))
     .settings(name := "kaeru-core")
     .settings(commonSettings:    _*)
     .settings(publisherSettings: _*)
-    .aggregate(libUDB,libAUTH)
-    .dependsOn(libUDB,libAUTH)    
+    .aggregate(libUDB)
+    .dependsOn(libUDB)
 
   // main library
   lazy val libMAIN = (project in file("."))
     .settings(name := "kaeru-app")
     .settings(commonSettings:    _*)
     .settings(publisherSettings: _*)
-    .aggregate(libUDB,libAUTH,libCORE)
-    .dependsOn(libUDB,libAUTH,libCORE)
+    .aggregate(libUDB,libCORE)
+    .dependsOn(libUDB,libCORE)
 
   // Setting for Prompt
   //~~~~~~~~~~~~~~~~~~~~

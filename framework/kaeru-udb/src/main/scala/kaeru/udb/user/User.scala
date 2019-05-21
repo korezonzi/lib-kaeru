@@ -4,7 +4,7 @@ import ixias.model._
 import java.time.{LocalDateTime,LocalDate}
 
 
-// ユーザー情報
+/* ユーザー情報 */
 import User._
 case class User(
   id:         Option[Id],           // 管理ID
