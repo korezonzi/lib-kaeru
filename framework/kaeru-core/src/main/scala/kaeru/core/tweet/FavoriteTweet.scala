@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 
 import kaeru.udb.user.User
 
-/* Tweet情報 */
+/* FavoriteTweet情報 */
 import FavoriteTweet._
 case class FavoriteTweet(
   id:             Option[Id],            // 管理ID
