@@ -1,8 +1,7 @@
-package kaeru.udb.user
+package kaeru.udb.user.model
 
 import ixias.model._
 import java.time.{LocalDateTime,LocalDate}
-
 
 /* ユーザー情報 */
 import User._

@@ -1,11 +1,11 @@
-package kaeru.udb.block
+package kaeru.udb.block.model
 
 import ixias.model._
 import java.time.LocalDateTime
 
-import kaeru.udb.user.User 
+import kaeru.udb.user.model.User 
 
-/* ブロックしているユーザーの管理 */
+/* ブロックユーザー管理 */
 import BlockUser._
 case class BlockUser (
   id:         Option[Id],            // 管理ID

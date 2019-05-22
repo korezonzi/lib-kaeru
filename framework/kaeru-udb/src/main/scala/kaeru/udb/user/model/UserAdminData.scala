@@ -1,8 +1,7 @@
-package kaeru.udb.user
+package kaeru.udb.user.model
 
 import ixias.model._
 import java.time.LocalDateTime
-
 
 /* ユーザー管理 */
 import AdminData._
@@ -19,3 +18,5 @@ object AdminData {
   val  Id   = User.Id
   type Id   = User.Id
 }
+
+

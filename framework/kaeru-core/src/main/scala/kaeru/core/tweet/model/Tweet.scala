@@ -1,10 +1,9 @@
-package kaeru.core.tweet
+package kaeru.core.tweet.model
 
 import ixias.model._
 import java.time.LocalDateTime
 
-import kaeru.udb.user.User
-
+import kaeru.udb.user.model.User
 
 /* Tweet情報 */
 import Tweet._
