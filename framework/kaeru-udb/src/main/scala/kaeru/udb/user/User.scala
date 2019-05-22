@@ -10,7 +10,6 @@ case class User(
   id:         Option[Id],           // 管理ID
   uid:        String,               // 実際に表示するユーザーID
   name:       String,               // ユーザーネーム
-  phone:      Option[Int],          // 電話番号
   address:    Option[String],       // 住所
   text:       Option[String],       // プロフィールの紹介文
   link:       Option[String],       // プロフィールにはっつけるリンク
