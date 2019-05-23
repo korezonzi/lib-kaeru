@@ -1,9 +1,9 @@
-package kaeru.core.tweet.model
+package kaeru.core.app.model
 
 import ixias.model._
 import java.time.LocalDateTime
 
-import kaeru.udb.user.model.User
+import kaeru.udb.model.User
 
 /* ReTweet管理 */
 import ReTweet._
@@ -14,6 +14,7 @@ case class ReTweet(
   createdAt:      LocalDateTime = NOW,   // データ作成日
 ) extends EntityModel[Id]
 
+/* コンパニオンオブジェクト */
 object ReTweet {
   val  Id  = Tweet.Id
   type Id  = Tweet.Id

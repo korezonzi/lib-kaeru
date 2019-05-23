@@ -1,9 +1,9 @@
-package kaeru.core.tweet.model
+package kaeru.core.app.model
 
 import ixias.model._
 import java.time.LocalDateTime
 
-import kaeru.udb.user.model.User
+import kaeru.udb.model.User
 
 /* Tweet情報 */
 import Tweet._
@@ -13,10 +13,13 @@ case class Tweet(
   link:           String,                // リンクコピー用??
   imageUrl:       Option[String],        // イメージURL
   text:           String,                // tweet内容
+  favocount:      Int           = 0,     // Favoカウント
+  rtcount:        Int           = 0,     // RTカウント  
   updatedAt:      LocalDateTime = NOW,   // データ更新日
   createdAt:      LocalDateTime = NOW,   // データ作成日
 ) extends EntityModel[Id]
 
+/* コンパニオンオブジェクト */
 object Tweet {
   val  Id  = the[Identity[Id]]
   type Id  = Long @@ Tweet
