@@ -10,7 +10,6 @@ import Tweet._
 case class Tweet(
   id:             Option[Id],            // 管理ID
   uid:            User.Id,               // ツイートユーザー ID
-  link:           String,                // リンクコピー用??
   imageUrl:       Option[String],        // イメージURL
   text:           String,                // tweet内容
   favocount:      Int           = 0,     // Favoカウント

@@ -8,7 +8,7 @@ import Password._
 case class Password(
   id:            Option[Id],                         // ユーザーID
   hashPass:      String,                             // ハッシュ化したPass
-  //state:,  // ステータス
+  //state:,  // 初ログインかどうかを持つ
   updatedAt:     LocalDateTime   = NOW,              // データ更新日
   createdAt:     LocalDateTime   = NOW,              // データ作成日
 ) extends EntityModel[Id]
