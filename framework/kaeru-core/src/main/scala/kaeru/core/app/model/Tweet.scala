@@ -12,8 +12,9 @@ case class Tweet(
   uid:            User.Id,               // ツイートユーザー ID
   imageUrl:       Option[String],        // イメージURL
   text:           String,                // tweet内容
+  reply:          Option[User.Id],       // 誰へのリプライ
   favocount:      Int           = 0,     // Favoカウント
-  rtcount:        Int           = 0,     // RTカウント  
+  rtcount:        Int           = 0,     // RTカウント
   updatedAt:      LocalDateTime = NOW,   // データ更新日
   createdAt:      LocalDateTime = NOW,   // データ作成日
 ) extends EntityModel[Id]
@@ -22,4 +23,8 @@ case class Tweet(
 object Tweet {
   val  Id  = the[Identity[Id]]
   type Id  = Long @@ Tweet
+
+  type WithNoId   = Entity.WithNoId   [Id, Tweet]
+  type EmbeddedId = Entity.EmbeddedId [Id, Tweet]
+
 }

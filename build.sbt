@@ -8,7 +8,7 @@
   lazy val release = (branch == "master" || branch.startsWith("release"))
   lazy val commonSettings = Seq(
     organization := "kaeru.app",
-    scalaVersion := "2.12.7",
+    scalaVersion := "2.12.8",
     resolvers ++= Seq(
       "Typesafe Releases"  at "http://repo.typesafe.com/typesafe/releases/",
       "Sonatype Release"   at "https://oss.sonatype.org/content/repositories/releases/",

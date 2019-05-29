@@ -18,4 +18,7 @@ case class ReTweet(
 object ReTweet {
   val  Id  = Tweet.Id
   type Id  = Tweet.Id
+
+  type WithNoId   = Entity.WithNoId   [Id, ReTweet]
+  type EmbeddedId = Entity.EmbeddedId [Id, ReTweet]
 }
