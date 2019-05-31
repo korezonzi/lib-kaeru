@@ -20,8 +20,8 @@ object UserPassword {
   def apply(
     id:         User.Id,
     hashPass:   String
-  ): Entity.EmbeddedId[User.Id,UserPassword] =
-  Entity.EmbeddedId[User.Id,UserPassword](
+  ): EmbeddedId =
+  Entity.EmbeddedId(
     new UserPassword(
       Some(id),
       hashPass

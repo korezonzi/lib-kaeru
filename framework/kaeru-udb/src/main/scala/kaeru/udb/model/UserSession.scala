@@ -22,4 +22,17 @@ object UserSession {
 
   type WithNoId   = Entity.WithNoId   [Id, UserSession]
   type EmbeddedId = Entity.EmbeddedId [Id, UserSession]
+
+  def apply(
+    id:       Id,
+    token:    Token,
+    expiryAt: LocalDateTime
+  ): WithNoId =
+    Entity.WithNoId {
+      new UserSession(
+        Some(id),
+        token,
+        expiryAt
+      )
+    }
 }

@@ -20,8 +20,21 @@ case class UserProfile(
 
 /* コンパニオンオブジェクト */
 object UserProfile {
-  val  Id         = the[Identity[Id]]
-  type Id         = Long @@ User
+  val  Id         = User.Id
+  type Id         = User.Id
   type WithNoId   = Entity.WithNoId   [Id, UserProfile]
   type EmbeddedId = Entity.EmbeddedId [Id, UserProfile]
+
+  def apply(
+    id:       Id,
+    identity: String,
+    name:     String
+  ): EmbeddedId =
+    Entity.EmbeddedId {
+      new UserProfile(
+        Some(id),
+        identity,
+        name
+      )
+    }
 }
