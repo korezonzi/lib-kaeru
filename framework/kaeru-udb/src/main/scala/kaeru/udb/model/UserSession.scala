@@ -15,7 +15,7 @@ case class UserSession(
 
 /* コンパニオンオブジェクト */
 object UserSession {
-  val  Token      = the[Identity[Id]]
+  val  Token      = the[Identity[Token]]
   type Token      = String @@ UserSession
 
   type Id         = User.Id
@@ -30,7 +30,7 @@ object UserSession {
   ): WithNoId =
     Entity.WithNoId {
       new UserSession(
-        Some(id),
+        None,
         token,
         expiryAt
       )

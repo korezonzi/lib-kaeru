@@ -1,4 +1,4 @@
-package kaeru.core.app.model
+package kaeru.app.model
 
 import ixias.model._
 import java.time.LocalDateTime

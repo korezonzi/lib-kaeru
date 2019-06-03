@@ -1,4 +1,4 @@
-package kaeru.core.app.model
+package kaeru.app.model
 
 import ixias.model._
 import java.time.LocalDateTime
@@ -6,8 +6,8 @@ import java.time.LocalDateTime
 import kaeru.udb.model.User
 
 /* いいね管理 */
-import FavoriteTweet._
-case class FavoriteTweet(
+import TweetFavorite._
+case class TweetFavorite(
   id:             Option[Id],             // 管理ID
   tweetId:        Tweet.Id,               // ツイートID
   uid:            User.Id,                // いいねしているユーザーID
@@ -16,10 +16,10 @@ case class FavoriteTweet(
 ) extends EntityModel[Id]
 
 /* コンパニオンオブジェクト */
-object FavoriteTweet {
+object TweetFavorite {
   val  Id  = the[Identity[Id]]
-  type Id  = Long @@ FavoriteTweet
+  type Id  = Long @@ TweetFavorite
 
-  type WithNoId   = Entity.WithNoId   [Id, FavoriteTweet]
-  type EmbeddedId = Entity.EmbeddedId [Id, FavoriteTweet]
+  type WithNoId   = Entity.WithNoId   [Id, TweetFavorite]
+  type EmbeddedId = Entity.EmbeddedId [Id, TweetFavorite]
 }

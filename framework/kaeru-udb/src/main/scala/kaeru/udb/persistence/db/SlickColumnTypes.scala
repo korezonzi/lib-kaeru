@@ -9,7 +9,6 @@ trait SlickColumnTypes[P <: JdbcProfile] {
   import driver.api._
 
   // -- [ ID定義 ] ------------------------------------------------------------
-  implicit val udbIdT01 = MappedColumnType.base[User.Id,              Long](id => id, User.Id(_))
-  implicit val udbIdT02 = MappedColumnType.base[UserProfile.Id,       Long](id => id, UserProfile.Id(_))
-  implicit val udbIdT03 = MappedColumnType.base[UserSession.Id,       Long](id => id, User.Id(_))
+  implicit val udbIdT01 = MappedColumnType.base[User.Id,              Long](id => id,   User.Id(_))
+  implicit val udbIdT02 = MappedColumnType.base[UserSession.Token,    String](token => token, UserSession.Token(_))
 }
