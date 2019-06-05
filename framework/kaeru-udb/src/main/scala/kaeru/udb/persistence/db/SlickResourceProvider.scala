@@ -1,7 +1,6 @@
 package kaeru.udb.persistence.db
 
 import slick.jdbc.JdbcProfile
-import kaeru.udb.model.UserSession
 
 trait SlickResourceProvider[P <: JdbcProfile] {
 
@@ -18,7 +17,7 @@ trait SlickResourceProvider[P <: JdbcProfile] {
     UserTable,
     UserPasswordTable,
     UserProfileTable,
-    UserSession
+    UserSessionTable
   )
 }
 

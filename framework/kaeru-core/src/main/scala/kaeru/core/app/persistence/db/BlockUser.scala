@@ -27,7 +27,7 @@ case class BlockUserTable[P <: JdbcProfile]()(implicit val driver: P)
     class Table(tag: Tag) extends BasicTable(tag, "block_user") {
       // Columns
       /* @1 */ def id         = column[BlockUser.Id]      ("id",         O.UInt64, O.PrimaryKey, O.AutoInc)
-      /* @2 */ def targetId   = column[User.Id]           ("taget_id",   O.Utf8Char255)
+      /* @2 */ def targetId   = column[User.Id]           ("taget_id",   O.UInt64)
       /* @3 */ def updatedAt  = column[LocalDateTime]     ("update_at",  O.TsCurrent)
       /* @4 */ def createdAt  = column[LocalDateTime]     ("created_at", O.Ts)
 

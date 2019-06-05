@@ -1,44 +1,43 @@
-package kaeru.udb.persistence
+package kaeru.app.persistence
 
 import slick.jdbc.JdbcProfile
 import ixias.persistence.SlickRepository
-import kaeru.udb.model.User
+import kaeru.app.model.BlockUser
 import scala.concurrent.Future
-import kaeru.udb.model.UserSession
 
-// ユーザーセッション管理
+// ユーザ情報管理
 //~~~~~~~~~~~~~~~~
-case class UserSessionRepository[P <: JdbcProfile]()(implicit val driver: P)
-    extends SlickRepository[User.Id, UserSession, P]
+case class BlockUserRepository[P <: JdbcProfile]()(implicit val driver: P)
+    extends SlickRepository[BlockUser.Id, BlockUser, P]
     with db.SlickColumnTypes[P]
     with db.SlickResourceProvider[P]
 {
   import api._
 
   /**
-   * ユーザーセッション情報の取得
+   * ブロックユーザー情報の取得
    */
    def get(id:Id):Future[Option[EntityEmbeddedId]] = {
-    RunDBAction(UserSessionTable, "slave") { _
+    RunDBAction(BlockUserTable, "slave") { _
       .filter(_.id === id)
       .result.headOption
     }
   }
 
   /**
-   * ユーザーセッション情報の追加
+   * ブロックユーザー情報の追加
    */
   def add(userpass:EntityWithNoId):Future[Id] = {
-    RunDBAction(UserSessionTable) { slick =>
+    RunDBAction(BlockUserTable) { slick =>
       slick returning slick.map(_.id) += userpass.v
     }
   }
 
   /**
-   * ユーザーセッションの削除
+   * ブロックを解除
    */
-  def remove(id:User.Id):Future[Option[EntityEmbeddedId]] = {
-    RunDBAction(UserSessionTable) { slick =>
+  def remove(id:Id):Future[Option[EntityEmbeddedId]] = {
+    RunDBAction(BlockUserTable) { slick =>
       val row = slick.filter(_.id === id)
       for {
         old <- row.result.headOption
@@ -48,10 +47,11 @@ case class UserSessionRepository[P <: JdbcProfile]()(implicit val driver: P)
   }
 
   /**
-   * ユーザーセッション情報更新
+   * ユーザー情報更新
    */
-  def update(data: EntityEmbeddedId): Future[Option[EntityEmbeddedId]] =
-    RunDBAction(UserSessionTable) { slick =>
+  @deprecated("use update method", "2.0")  
+  def update(data: EntityEmbeddedId): Future[Option[EntityEmbeddedId]] = {
+    RunDBAction(BlockUserTable) { slick =>
       val row = slick.filter(_.id === data.id)
       for {
         old <- row.result.headOption
@@ -61,4 +61,5 @@ case class UserSessionRepository[P <: JdbcProfile]()(implicit val driver: P)
         }
       } yield old
     }
+  }
 }

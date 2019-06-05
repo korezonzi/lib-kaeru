@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 
 import kaeru.udb.model.User
 
-/* フォロー情報管理 */
+/* フォロー/アンフォローー情報管理 */
 import FollowRelation._
 case class FollowRelation (
   id:           Option[Id],            // 管理ID

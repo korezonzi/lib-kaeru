@@ -28,7 +28,7 @@ object User {
     ): WithNoId =
     Entity.WithNoId (
       new User(
-        Some(id),
+        None,
         email,
       )
     )

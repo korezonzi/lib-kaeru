@@ -28,7 +28,7 @@ case class UserSessionTable[P <: JdbcProfile]()(implicit val driver: P)
       // Columns
       /* @1 */ def id         = column[User.Id]            ("id",         O.UInt64, O.PrimaryKey, O.AutoInc)
       /* @2 */ def token      = column[UserSession.Token]  ("email",      O.Utf8Char255)
-      /* @3 */ def expiryAt   = column[LocalDateTime]      ("phone",      O.Ts)
+      /* @3 */ def expiryAt   = column[LocalDateTime]      ("phone",      O.Utf8Char255)
       /* @4 */ def updatedAt  = column[LocalDateTime]      ("update_at",  O.TsCurrent)
       /* @5 */ def createdAt  = column[LocalDateTime]      ("created_at", O.Ts)
 

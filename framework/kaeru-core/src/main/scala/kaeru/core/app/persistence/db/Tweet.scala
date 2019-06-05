@@ -28,10 +28,10 @@ case class TweetTable[P <: JdbcProfile]()(implicit val driver: P)
     class Table(tag: Tag) extends BasicTable(tag, "tweet") {
       // Columns
       /* @1 */ def id         = column[Tweet.Id]          ("id",         O.UInt64, O.PrimaryKey, O.AutoInc)
-      /* @2 */ def uid        = column[User.Id]           ("user_id",    O.Utf8Char255)
-      /* @3 */ def imageUrl   = column[Option[String]]    ("image_url",  O.UInt64)
+      /* @2 */ def uid        = column[User.Id]           ("user_id",    O.UInt64)
+      /* @3 */ def imageUrl   = column[Option[String]]    ("image_url",  O.Utf8Char255)
       /* @4 */ def text       = column[String]            ("text",       O.Utf8Char255)
-      /* @5 */ def reply      = column[Option[User.Id]]   ("reply",      O.UInt64)
+      /* @5 */ def reply      = column[Option[Tweet.Id]]  ("reply",      O.UInt64)
       /* @6 */ def favocount  = column[Int]               ("favo_count", O.UInt16)
       /* @7 */ def rtcount    = column[Int]               ("rt_count",   O.UInt16)
       /* @8 */ def updatedAt  = column[LocalDateTime]     ("update_at",  O.TsCurrent)
@@ -39,7 +39,7 @@ case class TweetTable[P <: JdbcProfile]()(implicit val driver: P)
 
       // All columns as a tuple
       type TableElementTuple = (
-        Option[Tweet.Id], User.Id, Option[String], String, Option[User.Id],
+        Option[Tweet.Id], User.Id, Option[String], String, Option[Tweet.Id],
         Int,Int,LocalDateTime, LocalDateTime
       )
 
