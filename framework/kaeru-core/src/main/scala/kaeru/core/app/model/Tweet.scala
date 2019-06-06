@@ -29,10 +29,10 @@ object Tweet {
 
   object WithNoId {
     def apply(
-      id:     Option[Id],
-      uid:    User.Id,
+      id:       Option[Id],
+      uid:      User.Id,
       imageUrl: Option[String],
-      text:   String,
+      text:     String,
     ): WithNoId =
     Entity.WithNoId (
       new Tweet(

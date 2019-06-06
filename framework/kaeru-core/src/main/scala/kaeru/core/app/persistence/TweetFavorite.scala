@@ -53,13 +53,13 @@ case class TweetFavoriteRepository[P <: JdbcProfile]()(implicit val driver: P)
   def update(data: EntityEmbeddedId): Future[Option[EntityEmbeddedId]] = {
     RunDBAction(TweetFavoriteTable) { slick =>
       val row = slick.filter(_.id === data.id)
-      for {
+      (for {
         old <- row.result.headOption
         _   <- old match {
           case None    => DBIO.successful(0)
           case Some(_) => row.update(data.v)
         }
-      } yield old
+      } yield old).transactionally
     }
   }
 }

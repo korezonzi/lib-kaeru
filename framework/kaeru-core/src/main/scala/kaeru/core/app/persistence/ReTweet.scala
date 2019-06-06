@@ -27,9 +27,9 @@ case class ReTweetRepository[P <: JdbcProfile]()(implicit val driver: P)
   /**
    * RT情報の追加
    */
-  def add(userpass:EntityWithNoId):Future[Id] = {
+  def add(id:EntityWithNoId):Future[Id] = {
     RunDBAction(ReTweetTable) { slick =>
-      slick returning slick.map(_.id) += userpass.v
+      slick returning slick.map(_.id) += id.v
     }
   }
 
@@ -49,17 +49,16 @@ case class ReTweetRepository[P <: JdbcProfile]()(implicit val driver: P)
   /**
    * RT情報更新
    */
-  @deprecated("use update method", "2.0")  
   def update(data: EntityEmbeddedId): Future[Option[EntityEmbeddedId]] = {
     RunDBAction(ReTweetTable) { slick =>
       val row = slick.filter(_.id === data.id)
-      for {
+      (for {
         old <- row.result.headOption
         _   <- old match {
           case None    => DBIO.successful(0)
           case Some(_) => row.update(data.v)
         }
-      } yield old
+      } yield old).transactionally
     }
   }
 }

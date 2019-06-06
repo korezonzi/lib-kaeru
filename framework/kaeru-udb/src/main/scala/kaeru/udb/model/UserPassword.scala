@@ -9,7 +9,11 @@ case class UserPassword(
   hashPass:      String,                             // ハッシュ化したPass
   updatedAt:     LocalDateTime   = NOW,              // データ更新日
   createdAt:     LocalDateTime   = NOW,              // データ作成日
-) extends EntityModel[User.Id]
+) extends EntityModel[User.Id] {
+  /** パスワードの検証を行う */
+  def verify(password: String): Boolean =
+    UserPassword.verify(password, hashPass)
+}
 
 /* コンパニオンオブジェクト */
 object UserPassword {
@@ -17,14 +21,23 @@ object UserPassword {
   type WithNoId   = Entity.WithNoId   [User.Id, UserPassword]
   type EmbeddedId = Entity.EmbeddedId [User.Id, UserPassword]
 
+  // --[ パスワード文字列操作 ]-------------------------------------------------
+  /** パスワードのハッシュ値化 */
+  def hash(password: String): String =
+    ixias.security.PBKDF2.hash(password)
+
+  /** パスワードの検証を行う */
+  def verify(password: String, hash: String): Boolean =
+    ixias.security.PBKDF2.compare(password, hash)
+
   def apply(
     id:         User.Id,
-    hashPass:   String
+    password:   String
   ): EmbeddedId =
   Entity.EmbeddedId(
     new UserPassword(
       Some(id),
-      hashPass
+      hash(password)
     )
   )
 } 

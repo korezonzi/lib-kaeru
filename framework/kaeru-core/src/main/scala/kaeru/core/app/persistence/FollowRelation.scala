@@ -1,9 +1,11 @@
 package kaeru.app.persistence
 
+import scala.concurrent.Future
 import slick.jdbc.JdbcProfile
 import ixias.persistence.SlickRepository
+
 import kaeru.app.model.FollowRelation
-import scala.concurrent.Future
+import kaeru.udb.model.User
 
 // ユーザ情報管理
 //~~~~~~~~~~~~~~~~
@@ -23,6 +25,41 @@ case class FollowRelationRepository[P <: JdbcProfile]()(implicit val driver: P)
       .result.headOption
     }
   }
+
+
+  /**
+   * アカウントがアカウントをフォローしているか判定
+   */
+  def isFollow(to: User.Id, from: User.Id): Future[Option[FollowRelation.Id]] = {
+    RunDBAction(FollowRelationTable,"slave") { _
+      .filter(x => x.toUserId === to && x.fromUserId === from)
+      .map(_.id)
+      .result
+      .headOption
+    }
+  }
+
+   /**
+    *  指定したアカウントを,フォローしているアカウントのリスト
+    */
+   def getFollowers(id: User.Id): Future[Seq[User.Id]] = {
+     RunDBAction(FollowRelationTable,"slave") { _
+       .filter(_.toUserId === id)
+       .map(x => x.fromUserId)
+       .result
+     }
+   }
+
+   /**
+    *  指定したアカウントの,フォローしているアカウントのリスト
+    */
+   def getFollows(id: User.Id): Future[Seq[User.Id]] = {
+     RunDBAction(FollowRelationTable,"slave") { _
+       .filter(_.fromUserId === id)
+       .map(x => x.toUserId)
+       .result
+     }
+   }
 
   /**
    * FF情報の追加
@@ -49,7 +86,6 @@ case class FollowRelationRepository[P <: JdbcProfile]()(implicit val driver: P)
   /**
    * FF情報更新
    */
-  @deprecated("use update method", "2.0")  
   def update(data: EntityEmbeddedId): Future[Option[EntityEmbeddedId]] = {
     RunDBAction(FollowRelationTable) { slick =>
       val row = slick.filter(_.id === data.id)

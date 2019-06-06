@@ -26,7 +26,7 @@ case class UserPasswordRepository[P <: JdbcProfile]()(implicit val driver: P)
   }
 
   /**
-   * ユーザーパスワード情報の追加
+   * ユーザーパスワードの作成
    */
   def add(userpass:EntityWithNoId):Future[Id] = {
     RunDBAction(UserPasswordTable) { slick =>

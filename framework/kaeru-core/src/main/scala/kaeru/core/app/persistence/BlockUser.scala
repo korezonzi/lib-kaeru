@@ -1,9 +1,11 @@
 package kaeru.app.persistence
 
+import scala.concurrent.Future
 import slick.jdbc.JdbcProfile
 import ixias.persistence.SlickRepository
 import kaeru.app.model.BlockUser
-import scala.concurrent.Future
+
+import kaeru.udb.model.User
 
 // ユーザ情報管理
 //~~~~~~~~~~~~~~~~
@@ -25,7 +27,19 @@ case class BlockUserRepository[P <: JdbcProfile]()(implicit val driver: P)
   }
 
   /**
-   * ブロックユーザー情報の追加
+   * アカウントがアカウントをフォローしているか判定
+   */
+  def isBlock(to: User.Id, from: User.Id): Future[Option[BlockUser.Id]] = {
+    RunDBAction(BlockUserTable,"slave") { _
+      .filter(x => x.fromId === to && x.targetId === from)
+      .map(_.id)
+      .result
+      .headOption
+    }
+  }
+
+  /**
+   * ユーザーがユーザーをブロックする
    */
   def add(userpass:EntityWithNoId):Future[Id] = {
     RunDBAction(BlockUserTable) { slick =>
@@ -46,20 +60,7 @@ case class BlockUserRepository[P <: JdbcProfile]()(implicit val driver: P)
     }
   }
 
-  /**
-   * ユーザー情報更新
-   */
   @deprecated("use update method", "2.0")  
-  def update(data: EntityEmbeddedId): Future[Option[EntityEmbeddedId]] = {
-    RunDBAction(BlockUserTable) { slick =>
-      val row = slick.filter(_.id === data.id)
-      for {
-        old <- row.result.headOption
-        _   <- old match {
-          case None    => DBIO.successful(0)
-          case Some(_) => row.update(data.v)
-        }
-      } yield old
-    }
-  }
+  def update(data: EntityEmbeddedId): Future[Option[EntityEmbeddedId]] = 
+     Future.failed(new UnsupportedOperationException)
 }

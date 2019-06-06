@@ -24,7 +24,7 @@ case class TweetRepository[P <: JdbcProfile]()(implicit val driver: P)
   }
 
   /**
-   * Tweet情報の追加
+   * Tweetする
    */
   def add(tweet:EntityWithNoId): Future[Id] = {
     RunDBAction(TweetTable) { slick =>
@@ -33,7 +33,7 @@ case class TweetRepository[P <: JdbcProfile]()(implicit val driver: P)
   }
 
   /**
-   * Tweet情報の削除
+   * Tweetの削除
    */
   def remove(id:Id):Future[Option[EntityEmbeddedId]] = {
     RunDBAction(TweetTable) { slick =>
@@ -45,19 +45,8 @@ case class TweetRepository[P <: JdbcProfile]()(implicit val driver: P)
     }
   }
 
-  /**
-   * Tweet情報更新
-   */
-  def update(data: EntityEmbeddedId): Future[Option[EntityEmbeddedId]] = {
-    RunDBAction(TweetTable) { slick =>
-      val row = slick.filter(_.id === data.id)
-      for {
-        old <- row.result.headOption
-        _   <- old match {
-          case None    => DBIO.successful(0)
-          case Some(_) => row.update(data.v)
-        }
-      } yield old
-    }
-  }
+  /* Tweet情報を更新する仕様はないので作らない */
+  @deprecated("use update method", "2.0")    
+  def update(data: EntityEmbeddedId): Future[Option[EntityEmbeddedId]] =
+    Future.failed(new UnsupportedOperationException)    
 }

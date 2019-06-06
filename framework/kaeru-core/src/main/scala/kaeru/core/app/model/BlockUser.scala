@@ -8,8 +8,9 @@ import kaeru.udb.model.User
 /* ブロックユーザー管理 */
 import BlockUser._
 case class BlockUser (
-  id:             Option[Id],            // ブロックする側のユーザーID
-  targetId:       User.Id,               // ブロックされる側のユーザーID
+  id:             Option[Id],            // 管理D
+  fromId:         User.Id,               // ブロックする側のアカウントID
+  targetId:       User.Id,               // ブロックされる側のアカウントID
   updatedAt:      LocalDateTime = NOW,   // データ更新日
   createdAt:      LocalDateTime = NOW    // データ作成日
 ) extends EntityModel[Id]

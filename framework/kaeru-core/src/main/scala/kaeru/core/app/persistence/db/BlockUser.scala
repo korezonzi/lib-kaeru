@@ -27,24 +27,25 @@ case class BlockUserTable[P <: JdbcProfile]()(implicit val driver: P)
     class Table(tag: Tag) extends BasicTable(tag, "block_user") {
       // Columns
       /* @1 */ def id         = column[BlockUser.Id]      ("id",         O.UInt64, O.PrimaryKey, O.AutoInc)
-      /* @2 */ def targetId   = column[User.Id]           ("taget_id",   O.UInt64)
-      /* @3 */ def updatedAt  = column[LocalDateTime]     ("update_at",  O.TsCurrent)
-      /* @4 */ def createdAt  = column[LocalDateTime]     ("created_at", O.Ts)
+      /* @2 */ def fromId     = column[User.Id]           ("from_id",    O.UInt64)
+      /* @3 */ def targetId   = column[User.Id]           ("taget_id",   O.UInt64)
+      /* @4 */ def updatedAt  = column[LocalDateTime]     ("update_at",  O.TsCurrent)
+      /* @5 */ def createdAt  = column[LocalDateTime]     ("created_at", O.Ts)
 
       // All columns as a tuple
       type TableElementTuple = (
-        Option[BlockUser.Id], User.Id, LocalDateTime, LocalDateTime
+        Option[BlockUser.Id], User.Id, User.Id, LocalDateTime, LocalDateTime
       )
 
     // The * projection of the table
-    def * = (id.?, targetId, updatedAt, createdAt) <> (
+    def * = (id.?, fromId, targetId, updatedAt, createdAt) <> (
       /** The bidirectional mappings : Tuple(table) => Model */
       (t: TableElementTuple) => BlockUser(
-        t._1, t._2, t._3, t._4,
+        t._1, t._2, t._3, t._4, t._5
       ),
       /** The bidirectional mappings : Model => Tuple(table) */
       (v: TableElementType) => BlockUser.unapply(v).map { t => (
-        t._1, t._2, LocalDateTime.now(), t._4,
+        t._1, t._2, t._3, LocalDateTime.now(), t._5,
       ) }
     )
   }
